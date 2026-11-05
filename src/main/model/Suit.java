@@ -1,5 +1,9 @@
 package main.model;
 
-public class Suit {
-    
+public enum Suit {
+    TREBOL,
+    CORAZON,
+    DIAMANTE,
+    PICA,
+    COMODIN
 }
