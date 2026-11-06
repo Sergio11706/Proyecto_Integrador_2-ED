@@ -1,40 +1,54 @@
 package main.model;
 
-import main.util.Stack; 
+import main.util.*;
 
 public class Player extends Student {
     private int numeroJugador;
-    private int puntaje;
-    private Stack<Card> cartasGanadas;
+    private int puntaje;          // puntaje de la partida en curso / última jugada
+    private int puntajeMaximo;    // mejor puntaje histórico (el que usa el ranking)
+    private ILinkedList<Card> cartasGanadas;
+
     public Player(String dni, String nombre, String apellido, int edad, int numeroJugador) {
         super(dni, nombre, apellido, edad);
         this.numeroJugador = numeroJugador;
-        this.puntaje = 0; 
-        this.cartasGanadas = new Stack<Card>(); 
+        this.cartasGanadas = new SimpleLinkedList<>();
     }
 
     public int getNumeroJugador() {
         return numeroJugador;
     }
 
-    public void setNumeroJugador(int numeroJugador) {
-        this.numeroJugador = numeroJugador;
-    }
-
     public int getPuntaje() {
         return puntaje;
     }
 
-    public void setPuntaje(int puntaje) {
-        this.puntaje = puntaje;
+    public int getPuntajeMaximo() {
+        return puntajeMaximo;
     }
 
-    public Stack<Card> getCartasGanadas() {
-        return cartasGanadas;
+    /** Se llama al comenzar una partida: vacía las cartas y el puntaje de la partida. */
+    public void reiniciarPuntaje() {
+        puntaje = 0;
+        cartasGanadas = new SimpleLinkedList<>();
     }
 
-    public void setCartasGanadas(Stack<Card> cartasGanadas) {
-        this.cartasGanadas = cartasGanadas;
+    public void agregarCarta(Card carta) {
+        cartasGanadas.addLast(carta);
+    }
+
+    /** Puntaje de la partida = suma del valor de todas las cartas ganadas. */
+    public void calcularPuntajePartida() {
+        puntaje = 0;
+        for(Card carta: cartasGanadas){
+            puntaje += carta.getValor();
+        }
+    }
+
+    /** Se llama al terminar una partida: conserva el mayor puntaje. */
+    public void registrarPuntajePartida() {
+        if (puntaje > puntajeMaximo) {
+            puntajeMaximo = puntaje;
+        }
     }
 
     @Override
@@ -43,6 +57,7 @@ public class Player extends Student {
                 "estudiante=" + super.toString() +
                 ", numeroJugador=" + numeroJugador +
                 ", puntaje=" + puntaje +
+                ", puntajeMaximo=" + puntajeMaximo +
                 ", cartasGanadas=" + cartasGanadas.size() + " cartas" +
                 '}';
     }
