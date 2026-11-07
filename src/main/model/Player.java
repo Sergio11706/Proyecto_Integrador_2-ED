@@ -2,7 +2,7 @@ package main.model;
 
 import main.util.*;
 
-public class Player extends Student {
+public class Player extends Student implements Comparable<Player> {
     private int numeroJugador;
     private int puntaje;          // puntaje de la partida en curso / última jugada
     private int puntajeMaximo;    // mejor puntaje histórico (el que usa el ranking)
@@ -49,6 +49,20 @@ public class Player extends Student {
         if (puntaje > puntajeMaximo) {
             puntajeMaximo = puntaje;
         }
+    }
+
+    @Override
+    public int compareTo(Player otro) {
+        int resultado = Integer.compare(
+                otro.getPuntajeMaximo(),
+                this.getPuntajeMaximo()
+        );
+
+        if (resultado != 0) {
+            return resultado;
+        }
+
+        return this.getDni().compareTo(otro.getDni());
     }
 
     @Override
