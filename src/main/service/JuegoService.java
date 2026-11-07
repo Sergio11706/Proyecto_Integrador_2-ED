@@ -106,15 +106,19 @@ public class JuegoService {
     // Suma los valores de las cartas y aplica la regla de puntaje especial.
     public int calcularPuntaje(Carta[] cartas) {
         int total = 0;
+        boolean tieneAs = false;
+
         for (Carta carta : cartas) {
             total += carta.getValor();
+            if (carta.getValor() == 1) {
+                tieneAs = true;
+            }
         }
-        
-        if(total>100){
-            total*=2;
+
+        if (tieneAs) {
+            total *= 2;
         }
 
         return total;
-
     }
 }

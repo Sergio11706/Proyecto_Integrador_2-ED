@@ -6,7 +6,9 @@ import main.model.Jugador;
 import main.service.JuegoService;
 import main.service.RankingService;
 import main.service.InscripcionService;
-import main.util.*;
+import main.util.Helper;
+import main.util.ILinkedList;
+import main.util.SimpleLinkedList;
 
 /**
  * Clase principal para el Proyecto Integrador II - Estructura de Datos.
@@ -119,12 +121,8 @@ public class Main {
             System.out.println("  " + carta.toString());
         }
 
-        int suma = juego.calcularPuntaje(cartas);
-        if (suma>100) {
-            System.out.println("  puntaje: " + suma/2 + "*2 : " + suma);
-        } else {
-            System.out.println("  puntaje: " + suma);
-        }
+        int puntaje = juego.calcularPuntaje(cartas);
+        System.out.println("  puntaje: " + puntaje);
     }
 
     // Informa si hubo empate o quién ganó la ronda.

@@ -50,17 +50,6 @@ public class InscripcionService {
     return seleccionados;
   }
 
-  // Busca y devuelve un jugador por su número de identificación.
-  public Jugador buscarPorId(int id) {
-    for (int i = 0; i < listPlayers.size(); i++) {
-      Jugador p = listPlayers.getPos(i);
-      if (p.getNumeroJugador() == id) {
-        return p;
-      }
-    }
-    return null;
-  }
-
   // Comprueba si ya existe un jugador con el DNI indicado.
   private boolean existeDni(String dni) {
     for (int i = 0; i < listPlayers.size(); i++) {
