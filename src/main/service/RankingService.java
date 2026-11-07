@@ -1,51 +1,52 @@
 package main.service;
 
-import main.model.Player;
+import main.model.Jugador;
 import main.util.BinarySearchTree;
 import main.util.SimpleLinkedList;
 
 public class RankingService {
 
-    private BinarySearchTree<Player> arbolRanking;
+    private BinarySearchTree<Jugador> arbolRanking;
 
+    // Inicializa el árbol que almacena el ranking.
     public RankingService() {
         this.arbolRanking = new BinarySearchTree<>();
     }
 
-    public void actualizar(Player jugador) {
+    // Incorpora al jugador o actualiza su mejor puntaje en el ranking.
+    public void actualizar(Jugador jugador) {
         if (jugador == null) {
             throw new IllegalArgumentException("El jugador no puede ser nulo");
         }
 
-        Player anterior = buscarPorDni(jugador.getDni());
-
-        if (anterior != null
-                && anterior != jugador
-                && jugador.getPuntajeMaximo() <= anterior.getPuntajeMaximo()) {
-            return;
-        }
-
-        BinarySearchTree<Player> nuevoArbol = new BinarySearchTree<>();
-
-        for (Player elemento : arbolRanking.obtenerElementosEnOrden()) {
-            if (!elemento.getDni().equals(jugador.getDni())) {
-                nuevoArbol.add(elemento);
+        if (estaEnRanking(jugador)) {
+            if (jugador.getPuntaje() <= jugador.getPuntajeMaximo()) {
+                return;
             }
+            quitarPuntajeAnterior(jugador);
         }
 
-        nuevoArbol.add(jugador);
-        arbolRanking = nuevoArbol;
+        jugador.registrarPuntajePartida();
+        arbolRanking.add(jugador);
     }
 
-    private Player buscarPorDni(String dni) {
-        for (Player p : arbolRanking.obtenerElementosEnOrden()) {
-            if (p.getDni().equals(dni)) {
-                return p;
+    // Elimina del ranking el registro previo del jugador.
+    private void quitarPuntajeAnterior(Jugador jugador) {
+        arbolRanking.remove(jugador);
+    }
+
+    // Comprueba si el jugador ya aparece en el ranking.
+    private boolean estaEnRanking(Jugador jugador) {
+        for (Jugador p : arbolRanking.obtenerElementosEnOrden()) {
+            if (p.getDni().equals(jugador.getDni())) {
+                return true;
             }
         }
-        return null;
+        return false;
     }
-    public SimpleLinkedList<Player> obtenerRanking() {
+
+    // Devuelve los jugadores ordenados según el ranking.
+    public SimpleLinkedList<Jugador> obtenerRanking() {
         return arbolRanking.obtenerElementosEnOrden();
     }
 }

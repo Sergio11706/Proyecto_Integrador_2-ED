@@ -1,6 +1,6 @@
 package main.model;
 
-public enum Suit {
+public enum Palo {
     TREBOL,
     CORAZON,
     DIAMANTE,
