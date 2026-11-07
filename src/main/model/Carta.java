@@ -1,21 +1,21 @@
 package main.model;
 
-public class Card {
-    private Suit palo;
+public class Carta {
+    private Palo palo;
     private int valor;
     private boolean disponible;
 
-    public Card(Suit palo, int valor, boolean disponible) {
+    public Carta(Palo palo, int valor, boolean disponible) {
         this.palo = palo;
         this.valor = valor;
         this.disponible = disponible;
     }
 
-    public Suit getPalo() {
+    public Palo getPalo() {
         return palo;
     }
 
-    public void setPalo(Suit palo) {
+    public void setPalo(Palo palo) {
         this.palo = palo;
     }
 
@@ -37,10 +37,6 @@ public class Card {
 
     @Override
     public String toString() {
-        return "Card{" +
-                "palo=" + palo +
-                ", valor=" + valor +
-                ", disponible=" + disponible +
-                '}';
+        return this.valor + " " + this.palo;
     }
 }
